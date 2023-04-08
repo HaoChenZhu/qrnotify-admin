@@ -1,0 +1,793 @@
+openapi: 3.0.3
+info:
+  title: test
+  description: proyecto back test para qrnotify
+  version: 1.0.0
+servers:
+  - url: '{protocol}://nebrija-tfg/{basePath}'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: https
+        description: This value is assigned by the transfer protocol that has to be used
+      basePath:
+        default: /clients/qrnotify
+tags:
+  - name: Test
+    description: Testing service
+  - name: User
+    description: Everything about users
+  - name: Admin
+    description: Admin controller
+paths:
+  /test:
+    get:
+      tags:
+        - Test
+      summary: Prueba test
+      description: Prueba test
+      operationId: test
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/general_response'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+  /user:
+    get:
+      tags:
+        - User
+      summary: Get all users
+      description: Get all users
+      operationId: getUsers
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    post:
+      tags:
+        - User
+      summary: Create a new User
+      description: Create new User
+      operationId: postUsers
+      requestBody:
+        description: user info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_request_dto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+  /admin:
+    get:
+      tags:
+        - Admin
+      summary: Admin list
+      description: Get all admin
+      operationId: getAdmins
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/admin_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    post:
+      tags:
+        - Admin
+      summary: Create a new Admin
+      description: Create new Admin
+      operationId: postAdmin
+      requestBody:
+        description: admin info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/admin_request_dto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+  /admin/{identifier}:
+    get:
+      tags:
+        - Admin
+      summary: Get Admin
+      description: Get admin by id
+      operationId: getAdminById
+      parameters:
+        -   name: identifier
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    put:
+      tags:
+        - Admin
+      summary: Update Admin
+      description: Update admin by id
+      operationId: putAdmin
+      parameters:
+        -   name: identifier
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      requestBody:
+        description: admin info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/update_admin_request_dto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+    delete:
+      tags:
+        - Admin
+      summary: Delete Admin
+      description: Delete admin by id
+      operationId: deleteAdminById
+      parameters:
+        -   name: identifier
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        - default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+  /user/{phone}:
+    get:
+      tags:
+        - User
+      summary: Ger user by phone
+      operationId: getUserByPhone
+      parameters:
+        -   name: phone
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Succesfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_response_dto'
+        '204':
+          description: Not exist
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        -   default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+  /admin/email/{email}:
+    get:
+      tags:
+        - Admin
+      summary: Ger admin by email
+      operationId: getAdminByEmail
+      parameters:
+        -   name: email
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Succesfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin_response_dto'
+        '204':
+          description: Not exist
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        -   default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+  /user/{phone}/verifyCode/{code}/check:
+    post:
+      tags:
+        - User
+      summary: Verify code
+      operationId: verifyCode
+      parameters:
+        -   name: phone
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+        -   name: code
+            in: path
+            description: User auth code
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Succesfully updated
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '204':
+          description: Not exist
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+      security:
+        -   default: [ ]
+      x-auth-type: Application & Application User
+      x-throttling-tier: Unlimited
+components:
+  schemas:
+    general_response:
+      title: object of general response
+      required:
+        - code
+        - message
+      type: object
+      properties:
+        code:
+          type: string
+          description: Service return codigo.
+        message:
+          type: string
+          description: Description of the result of the operation performed
+    error:
+      title: Error en la aplicacion
+      required:
+        - code
+        - message
+        - request_id
+      type: object
+      properties:
+        code:
+          type: string
+          description: Codigo del resultado erroneo
+        message:
+          type: string
+          description: Descripcion del resultado erroneo
+        request_id:
+          type: string
+          description: Codigo de peticion unico.
+        details:
+          type: object
+          properties: { }
+          description: objeto con el detalle adicional de errores que desee aportar
+    error_response:
+      title: Error en la aplicacion encapsulado
+      required:
+        - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/error'
+    user_response_dto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: theUser
+        phone_number:
+          type: string
+          example: '12345'
+        created_date:
+          type: string
+        modificatied_date:
+          type: string
+        deleted_date:
+          type: string
+    user_request_dto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "hao"
+        phone_number:
+          type: string
+          example: '615656320'
+    admin_response_dto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "id of the admin"
+          example: "123456789"
+        name:
+          type: string
+          description: "name of the admin"
+          example: "Jhon"
+        email:
+          type: string
+          description: "admin email"
+          example: "john@email.com"
+        permissions:
+          type: array
+          description: "permissions of areas"
+          items:
+            type: string
+        created_date:
+          type: string
+        modificated_date:
+          type: string
+        deleted_date:
+          type: string
+    admin_request_dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "name of the admin"
+          example: "Jhon"
+        email:
+          type: string
+          description: "email"
+          example: "john@email.com"
+        password:
+          type: string
+          description: "password"
+          example: "1234567"
+        permissions:
+          type: array
+          items:
+            type: string
+    update_admin_request_dto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "name of the admin"
+          example: "Jhon"
+        password:
+          type: string
+          description: "password"
+          example: "1234567"
+        permissions:
+          type: array
+          items:
+            type: string
+    error_dto:
+      title: DTO Error
+      type: object
+      properties:
+        message:
+          type: string
+        request_id:
+          type: string
+        details:
+          type: string
+        code:
+          type: string
+  responses:
+    '200':
+      description: successful operation
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/general_response'
+    '400':
+      description: There was something wrong in the request and therefore could not be processed (headers, json syntax/content)
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/error_response'
+    '404':
+      description: The server can not find the requested
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/error_response'
+    '500':
+      description: Unknown Internal server error
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/error_response'
+    '501':
+      description: The request was not completed. The server did not support the functionality required
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/error_response'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
