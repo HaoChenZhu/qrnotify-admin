@@ -3,11 +3,10 @@ package com.nebrija.tfg.qrnotify.admin.controllers;
 import com.nebrija.tfg.qrnotify.admin.model.api.*;
 import com.nebrija.tfg.qrnotify.admin.services.AdminService;
 import com.nebrija.tfg.qrnotify.admin.services.UserService;
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,62 +39,63 @@ public class AdminUserController implements AdminApi, UserApi {
     @Override
     public ResponseEntity<ApiAdminResponseDto> deleteAdminById(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier) {
         ApiAdminResponseDto admin = adminService.deleteAdmin(identifier);
-        return new ResponseEntity<>(admin,HttpStatus.OK);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<ApiAdminResponseDto> getAdminById(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier) {
         ApiAdminResponseDto admin = adminService.getAdmin(identifier);
-        return new ResponseEntity<>(admin,HttpStatus.OK);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<ApiAdminResponseDto>> getAdmins() {
         List<ApiAdminResponseDto> admins = adminService.getAdmins();
-        return new ResponseEntity<>(admins,HttpStatus.OK);
+        return new ResponseEntity<>(admins, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ApiAdminResponseDto> postAdmin(@ApiParam(value = "admin info"  )  @Valid @RequestBody(required = false) ApiAdminRequestDto apiAdminRequestDto) {
+    public ResponseEntity<ApiAdminResponseDto> postAdmin(@ApiParam(value = "admin info") @Valid @RequestBody(required = false) ApiAdminRequestDto apiAdminRequestDto) {
         ApiAdminResponseDto admin = adminService.createAdmin(apiAdminRequestDto);
-        return new ResponseEntity<>(admin,HttpStatus.CREATED);
+        return new ResponseEntity<>(admin, HttpStatus.CREATED);
     }
 
-        @Override
+    @Override
     public ResponseEntity<ApiAdminResponseDto> putAdmin(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier, @ApiParam(value = "admin info") @Valid @RequestBody(required = false) ApiUpdateAdminRequestDto apiUpdateAdminRequestDto) {
         ApiAdminResponseDto admin = adminService.updateAdmin(identifier, apiUpdateAdminRequestDto);
-        return new ResponseEntity<>(admin,HttpStatus.OK);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<ApiUserResponseDto> getUserByPhone(String phone) {
-        ApiUserResponseDto apiUserResponseDto=userService.getUserByPhoneNumber(phone);
-        return new ResponseEntity<>(apiUserResponseDto,HttpStatus.OK);
+        ApiUserResponseDto apiUserResponseDto = userService.getUserByPhoneNumber(phone);
+        return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<List<ApiUserResponseDto>> getUsers() {
-        return UserApi.super.getUsers();
+        List<ApiUserResponseDto> apiUserResponseDto = userService.getAllUsers();
+        return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<ApiUserResponseDto> postUsers(ApiUserRequestDto apiUserRequestDto) {
-        ApiUserResponseDto apiUserResponseDto=userService.createUser(apiUserRequestDto);
-        return new ResponseEntity<>(apiUserResponseDto,HttpStatus.OK);
+        ApiUserResponseDto apiUserResponseDto = userService.createUser(apiUserRequestDto);
+        return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Boolean> verifyCode(@ApiParam(value = "User identifier",required=true) @PathVariable("phone") String phone,@ApiParam(value = "User auth code",required=true) @PathVariable("code") String code) {
-        Boolean verifyCode=userService.verifyCode(phone,code);
-        return new ResponseEntity<>(verifyCode,HttpStatus.OK);
+    public ResponseEntity<Boolean> verifyCode(@ApiParam(value = "User identifier", required = true) @PathVariable("phone") String phone, @ApiParam(value = "User auth code", required = true) @PathVariable("code") String code) {
+        Boolean verifyCode = userService.verifyCode(phone, code);
+        return new ResponseEntity<>(verifyCode, HttpStatus.OK);
 
     }
 
     @Override
-    public ResponseEntity<ApiAdminResponseDto> getAdminByEmail(@ApiParam(value = "User identifier",required=true) @PathVariable("email") String email) {
+    public ResponseEntity<ApiAdminResponseDto> getAdminByEmail(@ApiParam(value = "User identifier", required = true) @PathVariable("email") String email) {
         ApiAdminResponseDto admin = adminService.getAdminByEmail(email);
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
 
-    }
+}
