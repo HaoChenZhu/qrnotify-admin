@@ -27,18 +27,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ApiUserResponseDto createUser(ApiUserRequestDto apiUserRequestDto) {
-        String code = generateCode();
-        User user = userRepository.findByPhoneNumber(apiUserRequestDto.getPhoneNumber());
+        try {
+            String code = generateCode();
+            User user = userRepository.findByPhoneNumber(apiUserRequestDto.getPhoneNumber());
+            if (user == null) {
+                user = userMapper.toEntity(apiUserRequestDto);
+            }
+            user.setConfirmationCode(code);
+            userRepository.save(user);
 
-        if (user == null) {
-            user = userMapper.toEntity(apiUserRequestDto);
+            smService.sendSms(apiUserRequestDto.getPhoneNumber(), code);
+
+            return userMapper.toDto(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        user.setConfirmationCode(code);
-        userRepository.save(user);
-
-        smService.sendSms(apiUserRequestDto.getPhoneNumber(), code);
-
-        return userMapper.toDto(user);
     }
 
     private String generateCode() {
@@ -62,8 +66,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean verifyCode(String phoneNumber, String code) {
-       Boolean exists = userRepository.existsByPhoneNumber(phoneNumber);
-        if (exists) {
+       User exists = userRepository.findByPhoneNumber(phoneNumber);
+        if (exists != null && exists.getConfirmationCode().equals(code)) {
             return true;
         }
         return false;

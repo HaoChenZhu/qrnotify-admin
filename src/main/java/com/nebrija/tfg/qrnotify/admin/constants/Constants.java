@@ -6,4 +6,6 @@ public class Constants {
 
     public static final String MODULE_NAME = "qrnotify-admin";
 
+    public static final String VERIFICATION_CODE = "You verification code is: ";
+
 }

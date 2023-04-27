@@ -3,11 +3,10 @@ spring:
     mongodb:
       uri: mongodb+srv://user:user@cluster0.gw7id.mongodb.net/qrnotify?retryWrites=true&w=majority
 server:
-  port: 8080
+  port: 8081
 chen:
   base_path: /nebrija/qrnotify-admin
 twilio:
   account_sid: AC3325644bb87591e9461f745ff1810711
   auth_token: 01d71ed965349c236aefbfacc3aa43e8
   phone_number: +15075194910
-  message: "Your verification code is: "

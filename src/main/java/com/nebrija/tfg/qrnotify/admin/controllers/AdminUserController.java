@@ -87,8 +87,7 @@ public class AdminUserController implements AdminApi, UserApi {
     @Override
     public ResponseEntity<Boolean> verifyCode(@ApiParam(value = "User identifier", required = true) @PathVariable("phone") String phone, @ApiParam(value = "User auth code", required = true) @PathVariable("code") String code) {
         Boolean verifyCode = userService.verifyCode(phone, code);
-        return new ResponseEntity<>(verifyCode, HttpStatus.OK);
-
+        return new ResponseEntity<>(verifyCode ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
     }
 
     @Override

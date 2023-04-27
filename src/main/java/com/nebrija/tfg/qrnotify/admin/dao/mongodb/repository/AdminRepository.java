@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface AdminRepository {
 
+
     List<Admin> findAll();
 
     Admin findBy_id(String _id);
