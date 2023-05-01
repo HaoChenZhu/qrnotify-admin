@@ -10,4 +10,6 @@ twilio:
   account_sid: AC3325644bb87591e9461f745ff1810711
   auth_token: 01d71ed965349c236aefbfacc3aa43e8
   phone_number: +15075194910
-  message: "Your verification code is: "
+okta:
+  oauth2:
+    issuer: https://dev-86838266.okta.com/oauth2/default
