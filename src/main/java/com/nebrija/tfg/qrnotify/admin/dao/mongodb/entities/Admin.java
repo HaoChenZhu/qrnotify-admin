@@ -29,5 +29,5 @@ public class Admin extends AuditableEntityListener{
     private String password;
 
     @Field("permissions")
-    private List<String> permissions;
+    private List<Permission> permissions;
 }

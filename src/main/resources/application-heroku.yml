@@ -13,3 +13,9 @@ twilio:
 okta:
   oauth2:
     issuer: https://dev-86838266.okta.com/oauth2/default
+    client-id: 0oa9aooq57mOsWVPZ5d7
+    client-secret: WLZOlqHkVaGfcqr8exLBGuydvrskAQcrH2az9R6s
+    scope: hao
+qrnotify:
+  feign:
+    topic: https://qrnotify-topic.herokuapp.com/nebrija/qrnotify-admin

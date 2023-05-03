@@ -1,6 +1,8 @@
 package com.nebrija.tfg.qrnotify.admin.controllers;
 
+import com.nebrija.tfg.qrnotify.admin.clients.TopicClient;
 import com.nebrija.tfg.qrnotify.admin.model.api.*;
+import com.nebrija.tfg.qrnotify.admin.models.ApiTopicResponseDto;
 import com.nebrija.tfg.qrnotify.admin.services.AdminService;
 import com.nebrija.tfg.qrnotify.admin.services.UserService;
 import io.swagger.annotations.ApiParam;
@@ -9,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.validation.Valid;
@@ -31,12 +30,21 @@ public class AdminUserController implements AdminApi, UserApi {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private TopicClient topicClient;
+
     @Override
     public Optional<NativeWebRequest> getRequest() {
         return AdminApi.super.getRequest();
     }
 
     @Override
+    public ResponseEntity<ApiAdminResponseDto> postAdminPermission(@ApiParam(value = "User identifier",required=true) @PathVariable("identifier") String identifier,@ApiParam(value = "permission info"  )  @Valid @RequestBody(required = false) List<ApiPermissionRequestDto> apiPermissionRequestDto) {
+        ApiAdminResponseDto admin = adminService.addPermission(identifier,apiPermissionRequestDto);
+        return new ResponseEntity<>(admin,HttpStatus.OK);
+    }
+
+        @Override
     public ResponseEntity<ApiAdminResponseDto> deleteAdminById(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier) {
         ApiAdminResponseDto admin = adminService.deleteAdmin(identifier);
         return new ResponseEntity<>(admin, HttpStatus.OK);

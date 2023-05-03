@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: test
+  title: QRNotfy-Admin
   description: proyecto back test para qrnotify
   version: 1.0.0
 servers:
@@ -272,6 +272,66 @@ paths:
             explode: false
             schema:
               type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/admin_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+    post:
+      tags:
+        - Admin
+      summary: Add permission to Admin
+      description: Add permission to admin by id
+      operationId: postAdminPermission
+      parameters:
+        -   name: identifier
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      requestBody:
+        description: permission info
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/permission_request_dto'
       responses:
         '200':
           description: Successful operation
@@ -615,6 +675,22 @@ components:
       properties:
         error:
           $ref: '#/components/schemas/error'
+    permission_request_dto:
+      type: object
+      properties:
+        topic_id:
+          type: string
+          example: "123456789"
+    permission_response_dto:
+      type: object
+      properties:
+        topic_id:
+          type: string
+          description: "id of the topic"
+          example: "123456789"
+        active:
+          type: boolean
+          example: true
     user_response_dto:
       type: object
       properties:
@@ -658,7 +734,7 @@ components:
           type: array
           description: "permissions of areas"
           items:
-            type: string
+            $ref: '#/components/schemas/permission_response_dto'
         created_date:
           type: string
         modificated_date:
@@ -680,10 +756,6 @@ components:
           type: string
           description: "password"
           example: "1234567"
-        permissions:
-          type: array
-          items:
-            type: string
     update_admin_request_dto:
       type: object
       properties:
@@ -695,10 +767,6 @@ components:
           type: string
           description: "password"
           example: "1234567"
-        permissions:
-          type: array
-          items:
-            type: string
     error_dto:
       title: DTO Error
       type: object

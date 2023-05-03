@@ -34,10 +34,9 @@ public class UserServiceImpl implements UserService {
                 user = userMapper.toEntity(apiUserRequestDto);
             }
             user.setConfirmationCode(code);
+            user.setName(apiUserRequestDto.getName());
             userRepository.save(user);
-
             smService.sendSms(apiUserRequestDto.getPhoneNumber(), code);
-
             return userMapper.toDto(user);
         } catch (Exception e) {
             e.printStackTrace();
