@@ -4,6 +4,7 @@ import com.nebrija.tfg.qrnotify.admin.model.api.ApiAdminRequestDto;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiAdminResponseDto;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiPermissionRequestDto;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiUpdateAdminRequestDto;
+import com.nebrija.tfg.qrnotify.admin.models.ApiLoginResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,8 @@ import java.util.List;
 public interface AdminService {
 
     List<ApiAdminResponseDto> getAdmins();
+
+    ApiLoginResponseDto login(String email, String password);
 
     ApiAdminResponseDto createAdmin(ApiAdminRequestDto admin);
 

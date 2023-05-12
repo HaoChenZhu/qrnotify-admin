@@ -1,21 +1,22 @@
 package com.nebrija.tfg.qrnotify.admin.controllers;
 
-import com.nebrija.tfg.qrnotify.admin.clients.TopicClient;
 import com.nebrija.tfg.qrnotify.admin.model.api.*;
-import com.nebrija.tfg.qrnotify.admin.models.ApiTopicResponseDto;
 import com.nebrija.tfg.qrnotify.admin.services.AdminService;
 import com.nebrija.tfg.qrnotify.admin.services.UserService;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -30,21 +31,18 @@ public class AdminUserController implements AdminApi, UserApi {
     @Autowired
     private AdminService adminService;
 
-    @Autowired
-    private TopicClient topicClient;
-
     @Override
     public Optional<NativeWebRequest> getRequest() {
         return AdminApi.super.getRequest();
     }
 
     @Override
-    public ResponseEntity<ApiAdminResponseDto> postAdminPermission(@ApiParam(value = "User identifier",required=true) @PathVariable("identifier") String identifier,@ApiParam(value = "permission info"  )  @Valid @RequestBody(required = false) List<ApiPermissionRequestDto> apiPermissionRequestDto) {
-        ApiAdminResponseDto admin = adminService.addPermission(identifier,apiPermissionRequestDto);
-        return new ResponseEntity<>(admin,HttpStatus.OK);
+    public ResponseEntity<ApiAdminResponseDto> postAdminPermission(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier, @ApiParam(value = "permission info") @Valid @RequestBody(required = false) List<ApiPermissionRequestDto> apiPermissionRequestDto) {
+        ApiAdminResponseDto admin = adminService.addPermission(identifier, apiPermissionRequestDto);
+        return new ResponseEntity<>(admin, HttpStatus.OK);
     }
 
-        @Override
+    @Override
     public ResponseEntity<ApiAdminResponseDto> deleteAdminById(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier) {
         ApiAdminResponseDto admin = adminService.deleteAdmin(identifier);
         return new ResponseEntity<>(admin, HttpStatus.OK);
@@ -103,6 +101,5 @@ public class AdminUserController implements AdminApi, UserApi {
         ApiAdminResponseDto admin = adminService.getAdminByEmail(email);
         return new ResponseEntity<>(admin, HttpStatus.OK);
     }
-
 
 }

@@ -18,6 +18,9 @@ okta:
     client-id: 0oa9aooq57mOsWVPZ5d7
     client-secret: WLZOlqHkVaGfcqr8exLBGuydvrskAQcrH2az9R6s
     scope: hao
+  client:
+    token: 008vnWH92ZUN3tJp4NRGWQpdL97XExiqjq6mvRAncJ
+    orgUrl: https://dev-86838266.okta.com
 qrnotify:
   feign:
     topic: http://localhost:8080/nebrija/qrnotify-topic/
