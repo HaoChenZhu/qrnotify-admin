@@ -3,27 +3,28 @@ package com.nebrija.tfg.qrnotify.admin.controllers;
 import com.nebrija.tfg.qrnotify.admin.model.api.*;
 import com.nebrija.tfg.qrnotify.admin.services.AdminService;
 import com.nebrija.tfg.qrnotify.admin.services.UserService;
+import com.nebrija.tfg.qrnotify.admin.utils.JwtUtil;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+
+import java.sql.SQLOutput;
 import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
 
 
 @RestController
 @RequestMapping(value = "${chen.base_path}")
 @Slf4j
-public class AdminUserController implements AdminApi, UserApi {
+public class AdminUserController implements AdminApi, UserApi, LoginApi {
 
     @Autowired
     private UserService userService;
@@ -37,6 +38,17 @@ public class AdminUserController implements AdminApi, UserApi {
     }
 
     @Override
+    public ResponseEntity<ApiTokenResponseDto> verifyCode(@ApiParam(value = "", required = true) @Valid @RequestBody ApiVerifyRequestDto apiVerifyRequestDto) {
+        ApiTokenResponseDto token = userService.verifyCode(apiVerifyRequestDto);
+        return new ResponseEntity<>(token, HttpStatus.OK);
+    }
+    @Override
+    public ResponseEntity<ApiUserResponseDto> login(@ApiParam(value = "user info"  )  @Valid @RequestBody(required = false) ApiUserRequestDto apiUserRequestDto) {
+        ApiUserResponseDto apiUserResponseDto = userService.createUser(apiUserRequestDto);
+        return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);
+    }
+
+        @Override
     public ResponseEntity<ApiAdminResponseDto> postAdminPermission(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier, @ApiParam(value = "permission info") @Valid @RequestBody(required = false) List<ApiPermissionRequestDto> apiPermissionRequestDto) {
         ApiAdminResponseDto admin = adminService.addPermission(identifier, apiPermissionRequestDto);
         return new ResponseEntity<>(admin, HttpStatus.OK);
@@ -56,6 +68,7 @@ public class AdminUserController implements AdminApi, UserApi {
 
     @Override
     public ResponseEntity<List<ApiAdminResponseDto>> getAdmins() {
+
         List<ApiAdminResponseDto> admins = adminService.getAdmins();
         return new ResponseEntity<>(admins, HttpStatus.OK);
     }
@@ -90,11 +103,6 @@ public class AdminUserController implements AdminApi, UserApi {
         return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<Boolean> verifyCode(@ApiParam(value = "User identifier", required = true) @PathVariable("phone") String phone, @ApiParam(value = "User auth code", required = true) @PathVariable("code") String code) {
-        Boolean verifyCode = userService.verifyCode(phone, code);
-        return new ResponseEntity<>(verifyCode ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
-    }
 
     @Override
     public ResponseEntity<ApiAdminResponseDto> getAdminByEmail(@ApiParam(value = "User identifier", required = true) @PathVariable("email") String email) {

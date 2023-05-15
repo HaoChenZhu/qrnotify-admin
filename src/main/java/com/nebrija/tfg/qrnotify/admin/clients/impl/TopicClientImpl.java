@@ -26,7 +26,6 @@ public class TopicClientImpl {
         }catch (Exception e){
             log.error("Error: "+e.getMessage());
         }
-
         return false;
     }
 }

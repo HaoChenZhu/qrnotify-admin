@@ -66,6 +66,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_dto'
+  /login:
+    post:
+      tags:
+        - User
+      summary: Login user
+      description: Login new user
+      operationId: login
+      requestBody:
+        description: user info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_request_dto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_response_dto'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QRNotify
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '503':
+          description: Internal QRNotify storage system error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
   /user:
     get:
       tags:
@@ -575,36 +625,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_dto'
-  /user/{phone}/verifyCode/{code}/check:
+  /user/verify:
     post:
       tags:
         - User
       summary: Verify code
       operationId: verifyCode
-      parameters:
-        -   name: phone
-            in: path
-            description: User identifier
-            required: true
-            style: simple
-            explode: false
+      requestBody:
+        required: true
+        content:
+          application/json:
             schema:
-              type: string
-        -   name: code
-            in: path
-            description: User auth code
-            required: true
-            style: simple
-            explode: false
-            schema:
-              type: string
+              $ref: '#/components/schemas/verify_request_dto'
       responses:
         '200':
           description: Succesfully updated
           content:
             application/json:
               schema:
-                type: boolean
+                $ref: '#/components/schemas/token_response_dto'
         '204':
           description: Not exist
         '403':
@@ -715,6 +754,24 @@ components:
         phone_number:
           type: string
           example: '615656320'
+    verify_request_dto:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "hao"
+        phone_number:
+          type: string
+          example: '615656320'
+        code:
+          type: string
+          example: '123456'
+    token_response_dto:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "123456789"
     admin_response_dto:
       type: object
       properties:

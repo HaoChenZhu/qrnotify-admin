@@ -1,7 +1,9 @@
 package com.nebrija.tfg.qrnotify.admin.services;
 
+import com.nebrija.tfg.qrnotify.admin.model.api.ApiTokenResponseDto;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiUserRequestDto;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiUserResponseDto;
+import com.nebrija.tfg.qrnotify.admin.model.api.ApiVerifyRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +16,7 @@ public interface UserService {
 
     ApiUserResponseDto getUserByPhoneNumber(String phoneNumber);
 
-    boolean verifyCode(String phoneNumber, String code);
+    ApiTokenResponseDto verifyCode(ApiVerifyRequestDto apiVerifyRequestDto);
 
 
 }

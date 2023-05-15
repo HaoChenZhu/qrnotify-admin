@@ -64,11 +64,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public ApiLoginResponseDto login(String email, String password) {
-        return null;
-    }
-
-    @Override
     public ApiAdminResponseDto createAdmin(ApiAdminRequestDto admin) {
         User newUser = UserBuilder.instance().setProfileProperties(
                 Map.of(
@@ -87,7 +82,6 @@ public class AdminServiceImpl implements AdminService {
 
         // Activate the user
         newUser.activate(false);
-
         if (newUser.getStatus() != UserStatus.ACTIVE) {
             try {
                 throw new Exception("Error al activar el usuario");

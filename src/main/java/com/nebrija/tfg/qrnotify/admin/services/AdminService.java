@@ -14,8 +14,6 @@ public interface AdminService {
 
     List<ApiAdminResponseDto> getAdmins();
 
-    ApiLoginResponseDto login(String email, String password);
-
     ApiAdminResponseDto createAdmin(ApiAdminRequestDto admin);
 
     ApiAdminResponseDto updateAdmin(String identifier, ApiUpdateAdminRequestDto apiAdminRequestDto);

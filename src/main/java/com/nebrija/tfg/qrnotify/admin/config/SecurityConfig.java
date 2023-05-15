@@ -1,10 +1,12 @@
 package com.nebrija.tfg.qrnotify.admin.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.web.cors.CorsConfiguration;
@@ -15,19 +17,33 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
+    @Autowired
+    private CustomJwtRequestFilter customJwtRequestFilter;
+    @Bean
+    SecurityFilterChain userSecurityfilterChain(HttpSecurity http) throws Exception {
+        return http.cors(Customizer.withDefaults())
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .antMatcher("/nebrija/qrnotify-admin/user")
+                .addFilterBefore(customJwtRequestFilter, OAuth2LoginAuthenticationFilter.class)
+                .authorizeRequests(authorize -> authorize
+                        .anyRequest().authenticated())// validates access tokens as JWTs
+                .build();
+    }
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.cors(Customizer.withDefaults())
-
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests((authorize) -> authorize
-                        .antMatchers("/nebrija/qrnotify-admin/example", "/swagger-ui/**", "/swagger-resources/**", "/v2/api-docs", "/webjars/**", "/configuration/**")
+                        .antMatchers("/nebrija/qrnotify-admin/**","/nebrija/qrnotify-admin/login", "/swagger-ui/**", "/swagger-resources/**", "/v2/api-docs", "/webjars/**", "/configuration/**")
                         .permitAll()
                         .anyRequest().authenticated()) // All requests require authentication
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt) // validates access tokens as JWTs
                 .build();
     }
+
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

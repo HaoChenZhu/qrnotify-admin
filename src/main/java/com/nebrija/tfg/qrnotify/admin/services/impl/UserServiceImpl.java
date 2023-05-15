@@ -3,10 +3,14 @@ package com.nebrija.tfg.qrnotify.admin.services.impl;
 import com.nebrija.tfg.qrnotify.admin.dao.mongodb.entities.User;
 import com.nebrija.tfg.qrnotify.admin.dao.mongodb.repository.UserRepository;
 import com.nebrija.tfg.qrnotify.admin.mappers.UserMapper;
+
+import com.nebrija.tfg.qrnotify.admin.model.api.ApiTokenResponseDto;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiUserRequestDto;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiUserResponseDto;
+import com.nebrija.tfg.qrnotify.admin.model.api.ApiVerifyRequestDto;
 import com.nebrija.tfg.qrnotify.admin.services.SmService;
 import com.nebrija.tfg.qrnotify.admin.services.UserService;
+import com.nebrija.tfg.qrnotify.admin.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     SmService smService;
+
+    private JwtUtil jwtUtil;
 
     @Override
     public ApiUserResponseDto createUser(ApiUserRequestDto apiUserRequestDto) {
@@ -64,11 +70,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean verifyCode(String phoneNumber, String code) {
-       User exists = userRepository.findByPhoneNumber(phoneNumber);
-        if (exists != null && exists.getConfirmationCode().equals(code)) {
-            return true;
+    public ApiTokenResponseDto verifyCode(ApiVerifyRequestDto apiVerifyRequestDto) {
+       User exists = userRepository.findByPhoneNumber(apiVerifyRequestDto.getPhoneNumber());
+        if (exists != null && exists.getConfirmationCode().equals(apiVerifyRequestDto.getCode())) {
+            ApiTokenResponseDto t = new ApiTokenResponseDto();
+            t.setToken(jwtUtil.generateToken(apiVerifyRequestDto.getName(), apiVerifyRequestDto.getPhoneNumber()));
+            return t;
         }
-        return false;
+        return null;
     }
+
 }
