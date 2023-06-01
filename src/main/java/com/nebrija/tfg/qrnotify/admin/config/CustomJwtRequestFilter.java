@@ -19,15 +19,14 @@ public class CustomJwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
-        // Si la ruta no comienza con "/nebrija/qrnotify-user/", ignora esta petición y pasa al siguiente filtro
+        // Si la ruta no contien /user, ignora esta petición y pasa al siguiente filtro
         if (!path.contains("/user")) {
-            System.out.println("CustomJwtRequestFilter.doFilterInternal()++++++++++++++++++++++++++++++++");
             filterChain.doFilter(request, response);
             return;
         }
 
         final String authorizationHeader = request.getHeader("Authorization");
-
+        System.out.println("CustomJwtRequestFilter.doFilterInternal()++++++++++++++++++++++++++++++++");
         String username = null;
         String jwt = null;
 

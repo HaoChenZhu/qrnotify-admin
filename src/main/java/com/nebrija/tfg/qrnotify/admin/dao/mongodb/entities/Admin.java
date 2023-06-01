@@ -14,7 +14,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @Document(collection = "admins")
-public class Admin extends AuditableEntityListener{
+public class Admin extends AuditableEntityListener {
 
     @MongoId
     private ObjectId id;

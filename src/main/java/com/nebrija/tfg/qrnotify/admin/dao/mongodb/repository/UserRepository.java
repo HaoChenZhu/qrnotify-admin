@@ -1,8 +1,6 @@
 package com.nebrija.tfg.qrnotify.admin.dao.mongodb.repository;
 
 import com.nebrija.tfg.qrnotify.admin.dao.mongodb.entities.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -2,6 +2,7 @@ package com.nebrija.tfg.qrnotify.admin.dao.mongodb.repository.impl;
 
 import com.nebrija.tfg.qrnotify.admin.dao.mongodb.entities.User;
 import com.nebrija.tfg.qrnotify.admin.dao.mongodb.repository.UserRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -18,7 +19,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findBy_id(String _id) {
-        return null;
+        ObjectId id = new ObjectId();
+        User user =mongoTemplate.findById(id, User.class);
+        return user;
     }
 
     @Override

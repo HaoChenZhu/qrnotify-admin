@@ -27,7 +27,7 @@ public class JwtUtil {
     }
 
     public static String generateToken(String username, String phoneNumber) {
-        return Jwts.builder().setSubject(username).claim("phoneNumber", phoneNumber).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 1 hora de duración del token
+        return Jwts.builder().setSubject(phoneNumber).claim("name", username).setIssuedAt(new Date()).setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // 24 hora de duración del token
                 .signWith(key).compact();
     }
 }

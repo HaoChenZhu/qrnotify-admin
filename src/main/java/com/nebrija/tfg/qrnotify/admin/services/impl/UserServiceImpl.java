@@ -80,4 +80,13 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public ApiUserResponseDto getUserById(String id) {
+        User user = userRepository.findBy_id(id);
+        if (user != null) {
+            return userMapper.toDto(user);
+        }
+        return null;
+    }
+
 }

@@ -10,7 +10,7 @@ chen:
   base_path: /nebrija/qrnotify-admin
 twilio:
   account_sid: AC3325644bb87591e9461f745ff1810711
-  auth_token: 01d71ed965349c236aefbfacc3aa43e8
+  auth_token: f476a993f413377b080a47152ea0f248
   phone_number: +15075194910
 okta:
   oauth2:

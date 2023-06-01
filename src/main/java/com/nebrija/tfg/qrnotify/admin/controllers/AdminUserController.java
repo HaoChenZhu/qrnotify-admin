@@ -3,19 +3,14 @@ package com.nebrija.tfg.qrnotify.admin.controllers;
 import com.nebrija.tfg.qrnotify.admin.model.api.*;
 import com.nebrija.tfg.qrnotify.admin.services.AdminService;
 import com.nebrija.tfg.qrnotify.admin.services.UserService;
-import com.nebrija.tfg.qrnotify.admin.utils.JwtUtil;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
-
 import javax.validation.Valid;
-
-import java.sql.SQLOutput;
 import java.util.List;
 
 import java.util.Optional;
@@ -24,7 +19,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "${chen.base_path}")
 @Slf4j
-public class AdminUserController implements AdminApi, UserApi, LoginApi {
+public class AdminUserController implements AdminApi, UserApi, LoginApi,VerifyApi {
 
     @Autowired
     private UserService userService;
@@ -38,7 +33,7 @@ public class AdminUserController implements AdminApi, UserApi, LoginApi {
     }
 
     @Override
-    public ResponseEntity<ApiTokenResponseDto> verifyCode(@ApiParam(value = "", required = true) @Valid @RequestBody ApiVerifyRequestDto apiVerifyRequestDto) {
+    public ResponseEntity<ApiTokenResponseDto> verifyCode(@ApiParam(value = "" ,required=true )  @Valid @RequestBody ApiVerifyRequestDto apiVerifyRequestDto) {
         ApiTokenResponseDto token = userService.verifyCode(apiVerifyRequestDto);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
@@ -86,7 +81,7 @@ public class AdminUserController implements AdminApi, UserApi, LoginApi {
     }
 
     @Override
-    public ResponseEntity<ApiUserResponseDto> getUserByPhone(String phone) {
+    public ResponseEntity<ApiUserResponseDto> getUserByPhone(@ApiParam(value = "User phone",required=true) @PathVariable("phone") String phone) {
         ApiUserResponseDto apiUserResponseDto = userService.getUserByPhoneNumber(phone);
         return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);
     }
@@ -98,6 +93,12 @@ public class AdminUserController implements AdminApi, UserApi, LoginApi {
     }
 
     @Override
+    public ResponseEntity<ApiUserResponseDto> getUserById(@ApiParam(value = "User identifier",required=true) @PathVariable("identifier") String identifier) {
+        ApiUserResponseDto apiUserResponseDto = userService.getUserById(identifier);
+        return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);
+    }
+
+        @Override
     public ResponseEntity<ApiUserResponseDto> postUsers(ApiUserRequestDto apiUserRequestDto) {
         ApiUserResponseDto apiUserResponseDto = userService.createUser(apiUserRequestDto);
         return new ResponseEntity<>(apiUserResponseDto, HttpStatus.OK);

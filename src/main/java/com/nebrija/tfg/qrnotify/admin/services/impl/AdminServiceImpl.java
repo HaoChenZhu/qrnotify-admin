@@ -70,7 +70,8 @@ public class AdminServiceImpl implements AdminService {
                         "email", admin.getEmail(),
                         "login", admin.getEmail(),
                         "firstName", admin.getName(),
-                        "lastName", admin.getName())).setPassword(admin.getPassword().toCharArray())
+                        "lastName", admin.getName()))
+                .setPassword(admin.getPassword().toCharArray())
                 .buildAndCreate(oktaClient);
           if (newUser == null) {
             try {

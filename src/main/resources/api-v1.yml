@@ -529,7 +529,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_dto'
-  /user/{phone}:
+  /user/{identifier}:
+    get:
+      tags:
+        - User
+      summary: Get user by id
+      description: Get user by id
+      operationId: getUserById
+      parameters:
+        -   name: identifier
+            in: path
+            description: User identifier
+            required: true
+            style: simple
+            explode: false
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Succesfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_response_dto'
+        '204':
+          description: Not exist
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '405':
+          description: Method call not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_dto'
+        '500':
+          description: Internal Server Error QR
+  /user/phone/{phone}:
     get:
       tags:
         - User
@@ -538,7 +577,7 @@ paths:
       parameters:
         -   name: phone
             in: path
-            description: User identifier
+            description: User phone
             required: true
             style: simple
             explode: false
@@ -625,7 +664,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/error_dto'
-  /user/verify:
+  /verify:
     post:
       tags:
         - User
@@ -733,6 +772,9 @@ components:
     user_response_dto:
       type: object
       properties:
+        id:
+          type: string
+          example: "123456789"
         name:
           type: string
           example: theUser

@@ -18,5 +18,5 @@ public interface UserService {
 
     ApiTokenResponseDto verifyCode(ApiVerifyRequestDto apiVerifyRequestDto);
 
-
+    ApiUserResponseDto getUserById(String id);
 }
