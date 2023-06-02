@@ -16,6 +16,9 @@ okta:
     client-id: ${OKTA_CLIENT_ID}
     client-secret: ${OKTA_CLIENT_SECRET}
     scope: hao
+  client:
+    token: 008vnWH92ZUN3tJp4NRGWQpdL97XExiqjq6mvRAncJ
+    orgUrl: https://dev-86838266.okta.com
 qrnotify:
   feign:
-    topic: https://qrnotify-topic.herokuapp.com/nebrija/qrnotify-admin
+    topic: https://qrnotify-topic.herokuapp.com/nebrija/qrnotify-topic
