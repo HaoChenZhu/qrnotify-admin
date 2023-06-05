@@ -3,11 +3,12 @@ package com.nebrija.tfg.qrnotify.admin.exceptions;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiError;
 import com.nebrija.tfg.qrnotify.admin.model.api.ApiErrorResponse;
 import feign.FeignException;
-import feign.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import java.util.UUID;
 
 import static com.nebrija.tfg.qrnotify.admin.constants.Constants.MODULE_NAME;
 
@@ -21,6 +22,7 @@ public class ApiExceptionHandler {
         apiError.setCode("400");
         apiError.setMessage(ex.getMessage());
         apiError.setDetails(MODULE_NAME);
+        apiError.setRequestId(UUID.randomUUID().toString());
         apiErrorResponse.setError(apiError);
         return new ResponseEntity<>(apiErrorResponse, HttpStatus.BAD_REQUEST);
     }
@@ -32,6 +34,7 @@ public class ApiExceptionHandler {
         apiError.setCode("404");
         apiError.setMessage(ex.getMessage());
         apiError.setDetails(MODULE_NAME);
+        apiError.setRequestId(UUID.randomUUID().toString());
         apiErrorResponse.setError(apiError);
         return new ResponseEntity<>(apiErrorResponse, HttpStatus.NOT_FOUND);
     }
@@ -43,6 +46,7 @@ public class ApiExceptionHandler {
         apiError.setCode("500");
         apiError.setMessage(ex.getMessage());
         apiError.setDetails(MODULE_NAME);
+        apiError.setRequestId(UUID.randomUUID().toString());
         apiErrorResponse.setError(apiError);
         return new ResponseEntity<>(apiErrorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -53,6 +57,7 @@ public class ApiExceptionHandler {
         apiError.setCode("501");
         apiError.setMessage(ex.getMessage());
         apiError.setDetails(MODULE_NAME);
+        apiError.setRequestId(UUID.randomUUID().toString());
         apiErrorResponse.setError(apiError);
         return new ResponseEntity<>(apiErrorResponse, HttpStatus.NOT_IMPLEMENTED);
     }
@@ -64,6 +69,7 @@ public class ApiExceptionHandler {
         apiError.setCode(String.valueOf(ex.status()));
         apiError.setMessage(ex.getMessage());
         apiError.setDetails(MODULE_NAME);
+        apiError.setRequestId(UUID.randomUUID().toString());
         apiErrorResponse.setError(apiError);
         return new ResponseEntity<>(apiErrorResponse, HttpStatus.valueOf(ex.status()));
     }
