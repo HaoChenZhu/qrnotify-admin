@@ -1,5 +1,7 @@
 package com.nebrija.tfg.qrnotify.admin.controllers;
 
+import com.nebrija.tfg.qrnotify.admin.exceptions.ApiRequestException;
+import com.nebrija.tfg.qrnotify.admin.exceptions.NotImplementedException;
 import com.nebrija.tfg.qrnotify.admin.model.api.*;
 import com.nebrija.tfg.qrnotify.admin.services.AdminService;
 import com.nebrija.tfg.qrnotify.admin.services.UserService;
@@ -19,7 +21,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "${chen.base_path}")
 @Slf4j
-public class AdminUserController implements AdminApi, UserApi, LoginApi,VerifyApi {
+public class AdminUserController implements AdminApi, UserApi, LoginApi,VerifyApi{
 
     @Autowired
     private UserService userService;
@@ -32,6 +34,11 @@ public class AdminUserController implements AdminApi, UserApi, LoginApi,VerifyAp
         return AdminApi.super.getRequest();
     }
 
+
+    @GetMapping("/test")
+    public ResponseEntity test() {
+        throw new ApiRequestException("Test Exception");
+    }
     @Override
     public ResponseEntity<ApiTokenResponseDto> verifyCode(@ApiParam(value = "" ,required=true )  @Valid @RequestBody ApiVerifyRequestDto apiVerifyRequestDto) {
         ApiTokenResponseDto token = userService.verifyCode(apiVerifyRequestDto);
@@ -45,27 +52,24 @@ public class AdminUserController implements AdminApi, UserApi, LoginApi,VerifyAp
 
         @Override
     public ResponseEntity<ApiAdminResponseDto> postAdminPermission(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier, @ApiParam(value = "permission info") @Valid @RequestBody(required = false) List<ApiPermissionRequestDto> apiPermissionRequestDto) {
-        ApiAdminResponseDto admin = adminService.addPermission(identifier, apiPermissionRequestDto);
-        return new ResponseEntity<>(admin, HttpStatus.OK);
+        throw new NotImplementedException("Not implemented");
     }
 
     @Override
     public ResponseEntity<ApiAdminResponseDto> deleteAdminById(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier) {
-        ApiAdminResponseDto admin = adminService.deleteAdmin(identifier);
-        return new ResponseEntity<>(admin, HttpStatus.OK);
+        throw new NotImplementedException("Not implemented");
+
     }
 
     @Override
     public ResponseEntity<ApiAdminResponseDto> getAdminById(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier) {
-        ApiAdminResponseDto admin = adminService.getAdmin(identifier);
-        return new ResponseEntity<>(admin, HttpStatus.OK);
+        throw new NotImplementedException("Not implemented");
+
     }
 
     @Override
     public ResponseEntity<List<ApiAdminResponseDto>> getAdmins() {
-
-        List<ApiAdminResponseDto> admins = adminService.getAdmins();
-        return new ResponseEntity<>(admins, HttpStatus.OK);
+        throw new NotImplementedException("Not implemented");
     }
 
     @Override
@@ -76,8 +80,8 @@ public class AdminUserController implements AdminApi, UserApi, LoginApi,VerifyAp
 
     @Override
     public ResponseEntity<ApiAdminResponseDto> putAdmin(@ApiParam(value = "User identifier", required = true) @PathVariable("identifier") String identifier, @ApiParam(value = "admin info") @Valid @RequestBody(required = false) ApiUpdateAdminRequestDto apiUpdateAdminRequestDto) {
-        ApiAdminResponseDto admin = adminService.updateAdmin(identifier, apiUpdateAdminRequestDto);
-        return new ResponseEntity<>(admin, HttpStatus.OK);
+        throw new NotImplementedException("Not implemented");
+
     }
 
     @Override
@@ -107,8 +111,8 @@ public class AdminUserController implements AdminApi, UserApi, LoginApi,VerifyAp
 
     @Override
     public ResponseEntity<ApiAdminResponseDto> getAdminByEmail(@ApiParam(value = "User identifier", required = true) @PathVariable("email") String email) {
-        ApiAdminResponseDto admin = adminService.getAdminByEmail(email);
-        return new ResponseEntity<>(admin, HttpStatus.OK);
+        throw new NotImplementedException("Not implemented");
+
     }
 
 }
