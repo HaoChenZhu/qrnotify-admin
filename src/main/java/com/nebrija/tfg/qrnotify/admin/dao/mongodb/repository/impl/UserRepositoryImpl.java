@@ -19,7 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findBy_id(String _id) {
-        ObjectId id = new ObjectId();
+        ObjectId id = new ObjectId(_id);
         User user =mongoTemplate.findById(id, User.class);
         return user;
     }

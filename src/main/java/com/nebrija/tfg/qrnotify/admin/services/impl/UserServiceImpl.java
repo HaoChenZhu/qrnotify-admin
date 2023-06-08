@@ -110,10 +110,11 @@ public class UserServiceImpl implements UserService {
     public ApiUserResponseDto getUserById(String id) {
         try {
             User user = userRepository.findBy_id(id);
-            if (user != null) {
-                return userMapper.toDto(user);
+            if(user == null){
+                throw new ApiResourceNotFoundException("No existe el usuario con el id " + id);
             }
-            throw new ApiResourceNotFoundException("No existe el usuario con el id " + id);
+            return userMapper.toDto(user);
+
         } catch (Exception e) {
             log.error("Error al obtener el usuario con id " + id, e);
             throw new ServerErrorException("Error al obtener el usuario");
